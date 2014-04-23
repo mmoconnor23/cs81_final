@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+
+\title{Proposal: Predator, a New Motivation for Prey to Flock}
+\author{Melissa O'Connor and Joe Boninger}
+\date{April 7, 2014} %don't display the current date
+
+\begin{document}
+\maketitle
+
+\section{Adaptive Method}
+Joe
+-NEAT - using existing software
+-if time and promising results: potentially rtNEAT - our own implementation
+        implementation plan: modify exiting NEAT code 
+
+\section{The Learning Task}
+Joe: environment: world of prey and a predator in a bounded ocean
+Melissa: learning goal: generally, fitness based on density
+               prey want to flock in order to scare away the predator
+               predator wants to eat the prey but is scared of them if they
+                are too close to each other
+Joe: agent: simulated fish and shark in python simulator (not pyrobot)
+Melissa: sensor inputs: 
+        prey: distance from center of mass of the group of prey
+              average direction the group is facing
+              angle to turn to face the center of mass
+              field of vision (grid system like predator's)
+          Force the prey to move so they can't stop and "hide."
+          Prey will be punished when the predator touches them.
+        predator: density of fish in a grid system (4x4 grid) that 
+                represents its field of vision
+             The predator wants to move towards squares of low density (but
+             not zero...he still wants to eat fish). 
+             Punish if tries to eat his own predator.
+          The predator can move faster than the prey so he has a chance of 
+          catching them.
+Melissa: motor outputs: translate and rotate
+        prey: min speed above 0, max below predator's max
+Joe: setup: 
+        -give prey some time to learn how to flock without the presence of 
+        the predator
+        -predator also learning to avoid its own predator
+                -will get confused when it sees a region of 0.9 fish and 
+                also want to avoid that instead of eat it
+        -if this predator method doesn't work, take away the predator's 
+        predator and just punish for eating 0.9 density regions of prey
+\section{Hypothesis and Outcome}
+Melissa
+Prey will flock! This will scare the predator so it doesn't eat them! Yay!
+Predator will avoid the flocking prey because they look like his own 
+predator and are scary!
+\section{Analysis}
+Melissa
+1. visually observe the 'flock' 
+2. quantitatively measure their density/concentration
+3. count number of times predator tries to eat dense prey
+4. average fitness and speciation graphs
+        
+\end{document}
