@@ -26,6 +26,7 @@ def eval_individual(chromo,logFP=None):
     brain = nn.create_phenotype(chromo)
     sumTime = 0
     sumPeople = 0
+    sumDist = 0
     
     for trial in range(3):
         window = GraphWin("CS81 Final Project",1000,1000)
@@ -34,6 +35,7 @@ def eval_individual(chromo,logFP=None):
         preyList = []
         time = 0
         people = 0
+        distance = 0
     
         p1 = Prey(0,(random()*800) + 100,(random()*800) + 100,choice([-1,1])*2*pi*random(),window)
         p2 = Prey(1,(random()*800) + 100,(random()*800) + 100,choice([-1,1])*2*pi*random(),window)
@@ -80,10 +82,15 @@ def eval_individual(chromo,logFP=None):
     
         shark = Predator(1000,1000,5*pi/4,window)
 
-        while (len(preyList) > 3) and time < 20000:
+        while (len(preyList) > 3) and time < 15000:
             time += 1
             
             for p in preyList:
+                if time %50 == 0:
+                    distance += p.getTraveled()
+                    p.setPastX(p.getX())
+                    p.setPastY(p.getY())
+                    
                 brain.flush()
                 inputs = p.calculateInputs(preyList,shark)
 
@@ -94,22 +101,24 @@ def eval_individual(chromo,logFP=None):
                     outputs = brain.pactivate(inputs)
                     p.move(outputs[0],outputs[1])
 
-            if time == 7500:
+            if time == 4500:
                 print "Shark attack!"
-            if time > 7500:
+            if time > 4500:
                 shark.move(preyList)
 
         window.close()
 
         people = len(preyList)
-        time -= 7500
-        time /= float(12500)
+        time -= 4500
+        time /= float(10500)
         people /= float(20)
+        distance /= float(75000)
 
         sumTime += time
         sumPeople += people
+        sumDist += distance
         
-    return .67*(sumTime/3) + .33*(sumPeople/3)
+    return .4*(sumTime/3) + .4*(sumPeople/3) + .2*(sumDist/3)
 
 # Tell NEAT that we want to use the above function to evaluate fitness
 population.Population.evaluate = eval_fitness

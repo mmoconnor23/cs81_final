@@ -42,7 +42,7 @@ def testPredator():
             if inputs == "DEAD":
                 preyList.remove(p)
                 
-            p.move(random(),random())
+            p.move(1,.5)
                 
         shark.move(preyList)
     
@@ -74,7 +74,7 @@ def testInputs():
     window.close()
 
 def main():
-    #testPredator()
+    testPredator()
     #testInputs()
     
 main()

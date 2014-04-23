@@ -8,6 +8,8 @@ class Prey(object):
         self.index = index
         self.x = x
         self.y = y
+        self.pastx = x
+        self.pasty = y
         self.heading = heading
         self.window = window
 
@@ -27,6 +29,15 @@ class Prey(object):
 
     def getY(self):
         return self.y
+
+    def getPastX(self):
+        return self.pastx
+
+    def getPastY(self):
+        return self.pasty
+
+    def getTraveled(self):
+        return sqrt((self.x - self.pastx)**2 + (self.y - self.pasty)**2)
 
     def getHeading(self):
         return self.heading
@@ -96,6 +107,12 @@ class Prey(object):
         self.neighbors = neighbors
 
         return sumHeading/float(neighbors)
+
+    def setPastX(self,x):
+        self.pastx = x
+
+    def setPastY(self,y):
+        self.pasty = y
 
     def calculateInputs(self,preyList,predator):
         inputs = []
@@ -183,7 +200,7 @@ class Prey(object):
         return inputs
 
     def move(self,translate,rotate):
-        translate /= 5
+        translate /= float(5)
         translate += .05
 
         rotate -= .5
